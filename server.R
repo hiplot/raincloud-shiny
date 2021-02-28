@@ -3,6 +3,7 @@
 # TODO: Add Intro to the functions and files.
 #
 
+wd <- getwd()
 library('glue')
 library('stringr')
 library('svglite')
@@ -11,7 +12,6 @@ source("source/createPlot.R", local = TRUE)
 source("source/formatCode.R", local = TRUE)
 #source("source/downloadPlot.R", local = TRUE)
 source("source/dataUpload.R", local = TRUE)
-
 server <- function(input, output, session) {
   
   # Read the input data.
@@ -301,6 +301,7 @@ server <- function(input, output, session) {
                 to = tmpdir)
       
       # Move to the tmpDir to work with the tmpFiles
+      wd = getwd()
       setwd(tmpdir)
       
       # Change the name of the uploaded file so that the code still works.
@@ -342,6 +343,7 @@ server <- function(input, output, session) {
       
       # And create the zip
       zip(zipfile=fname, files=fileList)
+      setwd(wd)
     },
     contentType = "application/zip"
   )
